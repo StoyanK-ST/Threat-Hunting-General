@@ -1,0 +1,8 @@
+process_name= (
+"powershell.exe",
+"rundll32.exe",
+"regsvr32.exe",
+"mshta.exe",
+"certutil.exe",
+"wmic.exe"
+)
