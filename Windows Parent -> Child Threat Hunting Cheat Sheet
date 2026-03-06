@@ -1,0 +1,12 @@
+| Parent Process                                      | Child Process                          | Why It's Suspicious                  | Typical Attack Scenario                |
+| --------------------------------------------------- | -------------------------------------- | ------------------------------------ | -------------------------------------- |
+| **winword.exe / excel.exe / outlook.exe**           | cmd.exe / powershell.exe / wscript.exe | Office rarely launches shells        | Malicious macro / phishing payload     |
+| **winword.exe / excel.exe**                         | rundll32.exe                           | DLL execution via macro              | Macro dropping DLL payload             |
+| **browser (chrome.exe / msedge.exe / firefox.exe)** | cmd.exe / powershell.exe               | Browsers normally don't spawn shells | Drive-by exploit or malicious download |
+| **explorer.exe**                                    | powershell.exe (on servers)            | Rare in server environments          | Manual attacker activity               |
+| **services.exe**                                    | cmd.exe / powershell.exe               | Service manager spawning shell       | Lateral movement tools                 |
+| **wmiprvse.exe**                                    | cmd.exe / powershell.exe               | WMI launching shell                  | WMI remote execution                   |
+| **svchost.exe**                                     | cmd.exe / powershell.exe               | System services launching shells     | Exploit or persistence                 |
+| **lsass.exe**                                       | any user process                       | Should almost never spawn children   | Highly suspicious / malware            |
+| **winlogon.exe**                                    | cmd.exe / powershell.exe               | Abnormal interactive shell spawn     | Persistence or credential abuse        |
+| **taskeng.exe / taskhostw.exe**                     | cmd.exe / powershell.exe               | Scheduled task launching shell       | Malicious scheduled task               |
