@@ -1,0 +1,5 @@
+DeviceFileEvents
+| where FileName in ("bundle.js","processor.sh","migrate-repos.sh")
+   or SHA256 == "46faab8ab153fae6e80e7cca38eab363075bb524edd79e42269217a083628f09"
+| project Timestamp, DeviceName, FileName, FolderPath, SHA256, FileSize
+| order by Timestamp desc

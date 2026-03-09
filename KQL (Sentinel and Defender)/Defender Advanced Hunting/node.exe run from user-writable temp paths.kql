@@ -1,0 +1,5 @@
+DeviceProcessEvents
+| where FileName == "node.exe"
+| where ProcessCommandLine has_any ("\\AppData\\Local\\Temp\\", "\\AppData\\Roaming\\", "\\Temp\\", "\\Local\\Temp\\")
+| project Timestamp, DeviceName, InitiatingProcessFileName, ProcessId, ProcessCommandLine, FolderPath
+| order by Timestamp desc

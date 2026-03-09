@@ -1,0 +1,7 @@
+//You can check the UniqueTokenIdentifier, which is essentially assigned uniquely for each session. This can reveal, for example, that the token is being used by both legitimate and suspicious IP addresses (and countries). This would therefore be a possible indicator of VPN use:
+//This way you can create a reasonable chain from suspicious IP > Cross country token usage > Potential VPN activity + No suspicious interactive logon = Very likely legitimate:
+GraphAPIAuditEvents
+| where AccountObjectId == "faf7cac0-c88f-470b-9d21-29d2f03a9f77"
+//| where Location !in ("PREFFERED LOCATIONS HERE")
+//| where IpAddress == "1.1.1.1"
+| summarize by IpAddress, Location, UniqueTokenIdentifier

@@ -1,0 +1,9 @@
+DeviceNetworkEvents
+| where RemoteUrl has "api.github.com" or RemoteUrl contains "raw.githubusercontent.com" or RemoteUrl contains "githubusercontent.com"
+| project Timestamp, DeviceId, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessId
+| join kind=leftouter (
+    DeviceProcessEvents
+    | project DeviceId, ProcessId, ProcessCommandLine
+) on $left.DeviceId == $right.DeviceId and $left.InitiatingProcessId == $right.ProcessId
+| project Timestamp, DeviceName, RemoteUrl, RemoteIP, ProcessCommandLine
+| order by Timestamp desc

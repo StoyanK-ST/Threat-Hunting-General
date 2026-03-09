@@ -1,0 +1,6 @@
+EmailEvents
+| where (Subject contains "bitcoin" and SenderFromAddress =~ "attacker@attacker.com" )
+| where Timestamp > ago(5d)
+| join EmailUrlInfo on NetworkMessageId
+| project Timestamp, SenderMailFromAddress, SenderFromAddress, SenderIPv4, RecipientEmailAddress, Subject, AttachmentCount, UrlCount, Url, DeliveryAction, DeliveryLocation, AuthenticationDetails, ThreatTypes, ThreatNames
+| sort by Timestamp desc

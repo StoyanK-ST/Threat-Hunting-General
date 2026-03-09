@@ -1,0 +1,6 @@
+DeviceProcessEvents
+| where Timestamp > ago(14d)
+| where InitiatingProcessFileName in~ ("winword.exe", "excel.exe", "outlook.exe", "powerpnt.exe", "OneDrive.exe", "ONENOTE.EXE", "Teams.exe")
+| where FileName !in~ ("explorer.exe", "dllhost.exe", "ai.exe", "WINWORD.EXE", "AcroRd32.exe", "excel.exe", "outlook.exe", "powerpnt.exe", "OneDrive.exe", "ONENOTE.EXE", "Teams.exe", "fltldr.exe", "Microsoft.Mashup.Container.Loader.exe", "ONENOTEM.EXE", "Update.exe", "Acrobat.exe", "msedgewebview2.exe", "ms-teams.exe", "chrome.exe", "msedge.exe", "splwow64.exe", "Photos.exe", "pdf24-Reader.exe", "firefox.exe", "Microsoft.SharePoint.exe")
+//These parent processes are expected and cause a lot of noise.
+| project Timestamp, AccountName, DeviceName, InitiatingProcessFileName, InitiatingProcessSHA256, FileName, SHA256, ProcessCommandLine 

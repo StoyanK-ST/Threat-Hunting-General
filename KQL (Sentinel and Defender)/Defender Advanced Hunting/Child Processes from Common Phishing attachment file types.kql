@@ -1,0 +1,5 @@
+DeviceProcessEvents
+| where Timestamp > ago(14d)
+| where InitiatingProcessFileName matches regex "[[:ascii:]].exe" or InitiatingProcessFileName matches regex "[[:ascii:]].pdf" or InitiatingProcessFileName matches regex "[[:ascii:]].jpg" or InitiatingProcessFileName matches regex "[[:ascii:]].html" or InitiatingProcessFileName matches regex "[[:ascii:]].zip" or InitiatingProcessFileName matches regex "[[:ascii:]].rar"
+//The condition above will match any file with an ascii character and subsequent extention. Here we have the most common ones used in phishing attacks.
+| project Timestamp, AccountName, DeviceName, InitiatingProcessFileName, InitiatingProcessSHA256, FileName, SHA256, ProcessCommandLine 

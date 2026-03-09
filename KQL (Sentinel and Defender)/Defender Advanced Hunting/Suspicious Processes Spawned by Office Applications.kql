@@ -1,0 +1,3 @@
+DeviceProcessEvents
+| where InitiatingProcessFileName in~ ("winword.exe", "excel.exe", "outlook.exe", "powerpnt.exe", "OneDrive.exe", "ONENOTE.EXE", "Teams.exe")
+| where FileName in~ ("cmd.exe", "powershell.exe", "wscript.exe", "mshta.exe") //This query looks for suspicous child processes of Office Parent Processes

@@ -1,0 +1,5 @@
+DeviceProcessEvents
+| where FileName == "node.exe"
+| where ProcessCommandLine has_any (" -e "," --eval "," -p "," --print ", "/tmp/processor.sh", "/tmp/migrate-repos.sh")
+| project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessId, InitiatingProcessCommandLine, ProcessCommandLine
+| order by Timestamp desc

@@ -1,0 +1,11 @@
+//Guest accounts added in Entra ID Groups other than the ones specified involving multiple users:
+//Use the following query to see which user was added to which group and by who or which app:
+AuditLogs
+| where OperationName == "Add member to group"
+| extend
+    actorUser = tostring(InitiatedBy.user.userPrincipalName),
+    actorApp = tostring(InitiatedBy.app.displayName),
+    addedUser = tostring(TargetResources[0].userPrincipalName),
+    groupDisplayName = tostring(TargetResources[1].displayName)
+| project TimeGenerated, actorUser, actorApp, addedUser, groupDisplayName
+| sort by TimeGenerated desc

@@ -1,0 +1,5 @@
+DeviceProcessEvents
+| where FileName in~ ("curl.exe", "powershell.exe", "python.exe", "rclone.exe")
+| join kind=inner (DeviceNetworkEvents) on DeviceId, InitiatingProcessId
+| where RemoteIPType == "Public"
+| take 20000 //This has to be put in place here because the query consumes too much memory with it's current logic. This can also be fixed by projecting fewer columns or reducing the time range.

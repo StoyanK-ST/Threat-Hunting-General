@@ -1,0 +1,4 @@
+DeviceProcessEvents
+| where InitiatingProcessFileName contains "powershell.exe" and ProcessCommandLine contains "-enc"
+| extend b64 = extract("[A-Za-z0-9|+|=|/]{30,}", 0,CommandLine)
+| extend utf8_decode=base64_decodestring(b64)

@@ -1,0 +1,9 @@
+DeviceProcessEvents
+| where FileName == "node.exe"
+| join kind=leftouter (
+    DeviceProcessEvents
+    | where FileName in ("powershell.exe", "pwsh.exe", "cmd.exe", "curl.exe", "wget.exe")
+    | project ChildTimestamp = Timestamp, DeviceId, ParentProcessId = InitiatingProcessId, ChildFileName = FileName, ChildCommandLine = ProcessCommandLine
+) on $left.DeviceId == $right.DeviceId and $left.ProcessId == $right.ParentProcessId
+| project Timestamp, DeviceName = DeviceName, NodeProcessId = ProcessId, NodeCommandLine = ProcessCommandLine, ChildFileName, ChildCommandLine, ChildTimestamp
+| order by Timestamp desc

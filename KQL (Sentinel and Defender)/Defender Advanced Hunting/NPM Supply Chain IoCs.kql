@@ -1,0 +1,7 @@
+let NPMSupplyChainHack=externaldata (PackageName:string, Version:string, SHA1:string)
+[h'https://github.com/SlimKQL/Hunting-Queries-Detection-Rules/blob/main/IOC/Shai-hulud.csv']
+with (format='csv', ignoreFirstRecord=true);
+NPMSupplyChainHack
+| invoke FileProfile("SHA1", 1000)
+| project PackageName, Version, SHA1, GlobalPrevalence
+| sort by GlobalPrevalence desc

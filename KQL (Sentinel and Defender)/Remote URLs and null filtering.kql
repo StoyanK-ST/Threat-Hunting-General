@@ -1,0 +1,7 @@
+DeviceNetworkEvents
+| where Timestamp > ago(30d)
+| where DeviceName == "NAME"
+| where not(isempty(RemoteUrl)) //filter out null fields
+| project Timestamp, DeviceName, RemoteIP, RemotePort, RemoteUrl, LocalIP, LocalPort, Protocol, InitiatingProcessParentFileName, InitiatingProcessFolderPath, InitiatingProcessFileName, InitiatingProcessSHA256, InitiatingProcessAccountName
+| summarize count() by RemoteUrl
+| sort by count_

@@ -1,0 +1,2 @@
+DeviceProcessEvents
+| where FolderPath has_any ("C:\\Users\\Public", "C:\\ProgramData", "\\AppData\\Local\\Temp")

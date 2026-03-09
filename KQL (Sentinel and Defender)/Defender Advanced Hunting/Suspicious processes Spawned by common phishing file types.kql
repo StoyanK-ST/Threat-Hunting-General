@@ -1,0 +1,5 @@
+DeviceProcessEvents
+| where InitiatingProcessFileName matches regex "[[:ascii:]].exe" or InitiatingProcessFileName matches regex "[[:ascii:]].pdf" or InitiatingProcessFileName matches regex "[[:ascii:]].jpg" or InitiatingProcessFileName matches regex "[[:ascii:]].html" or InitiatingProcessFileName matches regex "[[:ascii:]].zip" or InitiatingProcessFileName matches regex "[[:ascii:]].rar"
+| where FileName in~ ("cmd.exe", "powershell.exe", "wscript.exe", "mshta.exe") 
+| project Timestamp, AccountName, DeviceName, InitiatingProcessFileName, InitiatingProcessSHA256, FileName, SHA256, ProcessCommandLine 
+//This query looks for suspicous child processes of file types used in phishing attacks Parent Processes

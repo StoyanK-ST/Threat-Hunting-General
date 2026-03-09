@@ -1,0 +1,6 @@
+DeviceNetworkEvents
+| where LocalIP contains "192.168.8.2"
+| where RemoteIP has_any ("192.168.66.65","192.168.8.159","192.168.8.160","192.168.81.92","192.168.8.165","192.168.8.204","192.168.81.112","192.168.8.210","192.168.8.209","192.168.8.211","192.168.44.115","192.168.44.64","192.168.44.6","192.168.75.38","192.168.75.198","192.168.44.93","192.168.8.182","192.168.8.185","192.168.8.190","192.168.75.44","192.168.8.191","192.168.8.192","192.168.8.193","192.168.8.195","192.168.66.70","192.168.8.166")
+//| where RemotePort == 135
+| where LocalPort == 135
+| project InitiatingProcessAccountName, InitiatingProcessParentFileName, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessSHA256, DeviceName, LocalIP, LocalPort, RemoteIP, RemotePort

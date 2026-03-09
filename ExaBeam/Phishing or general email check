@@ -1,0 +1,1 @@
+(subject: "email" OR product: ("Microsoft Exchange", "Microsoft 365")) AND activity: "receive" AND (email_subject: "password" OR "urgent" OR "action required" OR "passwort" OR "dringlich" OR "handlungsbedarf")

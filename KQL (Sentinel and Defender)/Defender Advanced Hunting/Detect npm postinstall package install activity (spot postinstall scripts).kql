@@ -1,0 +1,5 @@
+DeviceProcessEvents
+| where ProcessCommandLine has_any (" npm ", " yarn ", " pnpm ")
+| where ProcessCommandLine has_any ("install", "postinstall", "preinstall")
+| project Timestamp, DeviceName, InitiatingProcessFileName, ProcessId, ProcessCommandLine
+| order by Timestamp desc

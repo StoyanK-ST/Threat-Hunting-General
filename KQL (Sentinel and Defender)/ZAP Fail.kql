@@ -1,0 +1,11 @@
+EmailPostDeliveryEvents
+| where Timestamp > ago(7d)
+//List malicious emails that were not zapped
+| where ActionType has "ZAP" and ActionResult == "Error"
+| project ZapTime = Timestamp, ActionType, NetworkMessageId , RecipientEmailAddress
+//Get logon activity of recipients using RecipientEmailAddress and AccountUpn
+| join kind=inner IdentityLogonEvents on $left.RecipientEmailAddress == $right.AccountUpn
+| where Timestamp between ((ZapTime-24h) .. (ZapTime+24h))
+//Show only pertinent info, such as account name, the app or service, protocol, the target device, and type of logon
+| project ZapTime, ActionType, NetworkMessageId , RecipientEmailAddress, AccountUpn,
+LogonTime = Timestamp, AccountDisplayName, Application, Protocol, DeviceName, LogonType

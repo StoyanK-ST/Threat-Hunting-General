@@ -1,0 +1,12 @@
+DeviceNetworkEvents
+| where Timestamp > ago(30d)
+| where DeviceName == "3z1hgk3"
+| where not(isempty(RemoteUrl))
+| extend SuspicionScore =
+    0
+    + iif(RemotePort in (4444,1337,8081,8443), 1, 0)
+    + iif(RemoteUrl has_any ("pastebin","ngrok","duckdns","bit.ly"), 1, 0)
+    + iif(InitiatingProcessFileName in~ ("powershell.exe","cmd.exe","mshta.exe","rundll32.exe"), 2, 0)
+| summarize Hits=count(), MaxScore=max(SuspicionScore) by RemoteUrl
+| where MaxScore > 0
+| sort by MaxScore desc

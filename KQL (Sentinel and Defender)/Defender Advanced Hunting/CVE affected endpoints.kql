@@ -1,0 +1,7 @@
+DeviceTvmSoftwareVulnerabilities //This table contains device-level view of CVEs (maps them to endpoints); insert the CVEs you wish to look at in the line below
+| where CveId in ("CVE-2025-7775", "CVE-2025-20337", "CVE-2025-20281", "CVE-2025-6554", "CVE-2025-53770", "CVE-2025-54948", "CVE-2025-54987","CVE-2025-6965","CVE-2025-25257")
+| join kind=inner (
+    DeviceTvmSoftwareVulnerabilitiesKB //This table gives us extra vulnerability metadata
+    | project CveId, CvssScore, IsExploitAvailable, VulnerabilitySeverityLevel
+) on CveId
+| project DeviceName, DeviceId, CveId, VulnerabilitySeverityLevel, CvssScore, IsExploitAvailable

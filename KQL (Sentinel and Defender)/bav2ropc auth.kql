@@ -1,0 +1,10 @@
+let Locator = SigninLogs
+| where UserAgent == "BAV2ROPC"
+| extend RealLocation = geo_info_from_ip_address(IPAddress).["country"]
+|summarize make_set(RealLocation) by UserPrincipalName;
+SigninLogs
+| where UserAgent == "BAV2ROPC"
+| summarize make_set(ResultType) by UserPrincipalName, AuthenticationRequirement
+| join Locator on UserPrincipalName
+| project-away UserPrincipalName1
+| where isnotempty(set_RealLocation[1]) and isnotempty(set_ResultType[1])

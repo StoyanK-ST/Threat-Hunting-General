@@ -1,0 +1,27 @@
+let Lolbins = dynamic(["cmd.exe","powershell.exe","wscript.exe","cscript.exe","mshta.exe","rundll32.exe","regsvr32.exe"]); //define the list of commonly used LOLBins
+let UserApps = dynamic([ //define a list of commonly used user apps
+    "outlook.exe",
+    "winword.exe",
+    "excel.exe",
+    "powerpnt.exe",
+    "acrord32.exe",
+    "chrome.exe",
+    "msedge.exe",
+    "firefox.exe",
+    "explorer.exe"
+]);
+DeviceProcessEvents
+| where Timestamp > ago(7d)
+| where FileName in~ (Lolbins)
+| where InitiatingProcessFileName in~ (UserApps)
+| where ProcessCommandLine !contains "1Password-BrowserSupport.exe" //insert exclusions here
+| where ProcessCommandLine !contains '"rundll32.exe" C:\\Windows\\System32\\LogiLDA.dll,LogiFetch'
+| where ProcessCommandLine !contains "\\Local\\Microsoft\\OneDrive\\" //removed in this case because it was noise by updaters - adjust per case scenario
+| where ProcessCommandLine !contains "C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\Browser\\WCChromeExtn\\WCChromeNativeMessagingHost.exe"
+| where ProcessCommandLine !contains "C:\\Program Files\\Adobe\\Acrobat DC\\Acrobat\\Browser\\WCChromeExtn\\WCChromeNativeMessagingHost.exe" 
+| project Timestamp, DeviceName, AccountName,
+          InitiatingProcessFileName,
+          FileName,
+          ProcessCommandLine
+| order by Timestamp desc
+//| summarize count()by ProcessCommandLine //this line can be used for optimizing the query and looking at the most common causing factors

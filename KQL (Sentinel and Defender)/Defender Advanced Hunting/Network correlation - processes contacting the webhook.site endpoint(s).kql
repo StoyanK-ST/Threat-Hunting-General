@@ -1,0 +1,10 @@
+let nodes = DeviceProcessEvents
+| where FileName == "node.exe"
+| project NodeTime = Timestamp, DeviceId, DeviceName, NodeProcessId = ProcessId, NodeCommandLine = ProcessCommandLine;
+DeviceNetworkEvents
+| where RemoteUrl has "webhook.site" or RemoteUrl == "webhook.site" or DeviceName has "webhook.site"
+| project NetTime = Timestamp, DeviceId, InitiatingProcessId, RemoteUrl, RemoteIP, RemotePort
+| join kind=inner nodes on DeviceId
+| where InitiatingProcessId == NodeProcessId and abs(datetime_diff("second", NetTime, NodeTime)) < 120
+| project NodeTime, DeviceName, NodeProcessId, NodeCommandLine, RemoteUrl, RemoteIP, RemotePort
+| order by NodeTime desc

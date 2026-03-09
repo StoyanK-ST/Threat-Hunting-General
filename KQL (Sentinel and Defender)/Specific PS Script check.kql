@@ -1,0 +1,2 @@
+search in (DeviceProcessEvents, DeviceNetworkEvents, DeviceFileEvents, DeviceImageLoadEvents, DeviceEvents, DeviceImageLoadEvents, EmailEvents, EmailAttachmentInfo,EmailUrlInfo) "malicious_ps.ps1"
+| where Timestamp > ago(1d) and ProcessCommandLine contains "powershell.exe"

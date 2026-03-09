@@ -1,0 +1,12 @@
+DeviceProcessEvents
+| where Timestamp > ago(7d)
+| where FileName in~ ("curl.exe", "powershell.exe", "python.exe", "rclone.exe") 
+//| where ProcessCommandLine has_any ("-enc", "Invoke-WebRequest") <- This can be used to look for commands which have these strings in them that are often used by malicious PS scripts.
+| project DeviceId, Timestamp, InitiatingProcessId = ProcessId, FileName, FolderPath, ProcessCommandLine;
+DeviceNetworkEvents
+| where Timestamp > ago(7d)
+| where RemoteIPType == "Public"
+//| where RemotePort !in (80, 443) <- this can be used to filter out commonly used ports or if you're looking for odd ports.
+//| where RemoteUrl has_any ("dropbox", "telegram", "mega", "anonfiles") <- this can be used to look for specific remote domains.
+| join kind=inner (DeviceProcessEvents) on DeviceId, InitiatingProcessId
+| project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessCommandLine, RemoteUrl, RemoteIP, RemotePort

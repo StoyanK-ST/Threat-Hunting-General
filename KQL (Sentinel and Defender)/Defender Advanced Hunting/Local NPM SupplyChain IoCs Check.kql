@@ -1,0 +1,12 @@
+let NPMSupplyChainHack = externaldata(PackageName:string, Version:string, SHA1:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/Shai-hulud.csv']
+with (format='csv', ignoreFirstRecord=true);
+let sha1_iocs = NPMSupplyChainHack
+| where isnotempty(SHA1)
+| distinct SHA1;
+DeviceFileEvents
+| where Timestamp > ago(30d)
+| where SHA1 in (sha1_iocs)
+| project Timestamp, DeviceName, FileName, FolderPath, SHA1,
+          InitiatingProcessFileName, InitiatingProcessCommandLine
+| sort by Timestamp desc

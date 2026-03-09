@@ -1,0 +1,4 @@
+DeviceEvents
+| where Timestamp > ago(30d)
+| where ActionType in ("SmartScreenUrlWarning", "ExploitGuardNetworkProtectionBlocked")
+| project Timestamp, DeviceName, AdditionalFields
