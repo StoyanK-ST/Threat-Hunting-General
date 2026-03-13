@@ -1,0 +1,4 @@
+event_code= "4769"
+AND ticket_encryption_type= "0x17"
+AND NOT service_name= "krbtgt"
+AND NOT service_name= WLD("*$")

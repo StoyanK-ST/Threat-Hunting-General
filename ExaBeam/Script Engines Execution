@@ -1,0 +1,2 @@
+event_code = "4688"
+AND process_name = ("wscript.exe","cscript.exe","mshta.exe")

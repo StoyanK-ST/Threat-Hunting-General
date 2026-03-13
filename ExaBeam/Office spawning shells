@@ -1,0 +1,3 @@
+event_code = "4688"
+AND parent_process_name = ("winword.exe","excel.exe","outlook.exe","powerpnt.exe")
+AND process_name = ("cmd.exe","powershell.exe","wscript.exe","cscript.exe","mshta.exe")

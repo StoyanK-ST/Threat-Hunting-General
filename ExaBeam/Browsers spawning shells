@@ -1,1 +1,3 @@
-parent_process_name= ("chrome.exe", "msedge.exe", "firefox.exe") AND process_name= ("cmd.exe", "powershell.exe")
+event_code = "4688"
+AND parent_process_name = ("chrome.exe","msedge.exe","firefox.exe","iexplore.exe")
+AND process_name = ("cmd.exe","powershell.exe","wscript.exe","cscript.exe")

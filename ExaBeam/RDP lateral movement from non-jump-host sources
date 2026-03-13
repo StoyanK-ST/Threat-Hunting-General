@@ -1,0 +1,4 @@
+event_code="4624"
+AND login_type=(10, 7)
+AND NOT src_ip: [10.0.0.0/8]
+AND NOT src_ip: [192.168.0.0/16]

@@ -1,8 +1,2 @@
-process_name= (
-"powershell.exe",
-"rundll32.exe",
-"regsvr32.exe",
-"mshta.exe",
-"certutil.exe",
-"wmic.exe"
-)
+event_code = "4688"
+AND process_name = ("powershell.exe","rundll32.exe","regsvr32.exe","mshta.exe","certutil.exe","wmic.exe","bitsadmin.exe")

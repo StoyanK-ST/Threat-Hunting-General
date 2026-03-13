@@ -1,0 +1,3 @@
+event_code = "4688"
+AND parent_process_name = ("lsass.exe","winlogon.exe","services.exe","svchost.exe")
+AND process_name = ("cmd.exe","powershell.exe")
